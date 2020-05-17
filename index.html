@@ -18,18 +18,20 @@
         </header>
         <section class="main">
             <div class="container">
-                <input class="todo"type="text" placeholder="What needs to be done?">
+                <input id="todo"type="text" placeholder="What needs to be done?" onkeydown="addComponent(event)">
                 <hr>
-                <div class="list">
+                <div id="list">
                     <div class="list-item">
-                        <input type="checkbox" id="check1">
-                        <label for="check1" class = "checkmark"></label>
-                        <div class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti nam sequi est, necessitatibus magni sit ex maxime minima eius, unde expedita. Fugit asperiores pariatur, illum fuga provident inventore maxime ducimus.</div>
-                        <div class="btn-wrap"><button></button></div>
+                        <input type="checkbox" id="check_1">
+                        <label for="check_1" class = "checkmark"></label>
+                        <div class="text">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti nam sequi est, necessitatibus magni sit ex maxime minima eius, unde expedita. Fugit asperiores pariatur, illum fuga provident inventore maxime ducimus.
+                        </div>
+                        <button></button>
                     </div>
                     <div class="list-item">
-                        <input type="checkbox" id="check2">
-                        <label for="check2" class = "checkmark"></label>
+                        <input type="checkbox" id="check_2">
+                        <label for="check_2" class = "checkmark"></label>
                         <div class="text">adjasdansdnjasjkdnjas</div>
                         
                         <button></button>
@@ -42,5 +44,6 @@
                 Double-click to edit a todo
             </div>
         </footer>
+        <script src="/js/script.js"></script>
     </body>
 </html>

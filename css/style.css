@@ -26,18 +26,18 @@ header h1 {
   margin-top: 3px;
 }
 
-.main .todo {
+.main #todo {
   border: none;
   width: 100%;
 }
 
-.main .list .list-item {
+.main #list .list-item {
   margin: 10px 0 10px 0;
   padding: 10px 0 10px 0;
   position: relative;
 }
 
-.main .list .list-item .text {
+.main #list .list-item .text {
   display: inline-block;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
@@ -45,13 +45,14 @@ header h1 {
   padding-right: 50px;
 }
 
-.main .list .list-item input {
+.main #list .list-item input {
   width: 0;
   height: 0;
   display: block;
+  opacity: 0;
 }
 
-.main .list .list-item .checkmark {
+.main #list .list-item .checkmark {
   display: inline-block;
   float: left;
   width: 40px;
@@ -69,7 +70,7 @@ header h1 {
           transform: translate(0, -50%);
 }
 
-.main .list .list-item .checkmark:after {
+.main #list .list-item .checkmark:after {
   content: "";
   position: absolute;
   width: 12px;
@@ -87,28 +88,32 @@ header h1 {
           user-select: none;
 }
 
-.main .list .list-item input:checked ~ .checkmark {
+.main #list .list-item input:checked ~ .checkmark {
   border: 1px solid #08bb68;
 }
 
-.main .list .list-item input:checked ~ .checkmark:after {
+.main #list .list-item input:checked ~ .checkmark:after {
   opacity: 1;
 }
 
-.main .list .list-item input:checked ~ .text {
+.main #list .list-item input:checked ~ .text {
   color: #ddd;
   text-decoration: line-through;
 }
 
-.main .list .list-item .btn-wrap {
+.main #list .list-item .btn-wrap {
   display: inline-block;
   float: right;
 }
 
-.main .list .list-item button {
+.main #list .list-item button {
   border: 0;
   width: 40px;
   height: 40px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   background: #FFF;
   -webkit-box-shadow: none;
           box-shadow: none;
@@ -120,7 +125,7 @@ header h1 {
   opacity: 0.1;
 }
 
-.main .list .list-item button:before {
+.main #list .list-item button:before {
   content: "";
   position: absolute;
   width: 3px;
@@ -131,9 +136,13 @@ header h1 {
   -webkit-transform: translate(-50%, -50%) rotateZ(40deg);
           transform: translate(-50%, -50%) rotateZ(40deg);
   border-radius: 2px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
-.main .list .list-item button:after {
+.main #list .list-item button:after {
   content: "";
   position: absolute;
   width: 3px;
@@ -144,9 +153,13 @@ header h1 {
   -webkit-transform: translate(-50%, -50%) rotateZ(-40deg);
           transform: translate(-50%, -50%) rotateZ(-40deg);
   border-radius: 2px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
-.main .list .list-item button:hover {
+.main #list .list-item button:hover {
   opacity: 1;
 }
 

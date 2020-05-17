@@ -21,12 +21,12 @@ header
         color: #949494
         margin-top: 3px
         
-    .todo
+    #todo
         //border: 1px solid #e6e6e6
         border: none
         width: 100%
         
-    .list
+    #list
         .list-item
             margin: 10px 0 10px 0
             padding: 10px 0 10px 0
@@ -42,6 +42,7 @@ header
                 width: 0
                 height: 0
                 display: block
+                opacity: 0
             .checkmark
                 display: inline-block
                 float: left
@@ -83,7 +84,7 @@ header
                 border: 0
                 width: 40px
                 height: 40px
-
+                user-select: none
                 background: #FFF
                 box-shadow: none
                 position: absolute
@@ -101,6 +102,7 @@ header
                     left: 50%
                     transform: translate(-50%, -50%) rotateZ(40deg)
                     border-radius: 2px
+                    user-select: none
                    
                 &:after
                     content: ""
@@ -112,6 +114,7 @@ header
                     left: 50%
                     transform: translate(-50%, -50%) rotateZ(-40deg)
                     border-radius: 2px
+                    user-select: none
                     
             button:hover
                     opacity: 1
