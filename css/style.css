@@ -1,0 +1,160 @@
+body {
+  background-color: #f5f5f5;
+}
+
+header h1 {
+  font-family: 'Balsamiq Sans';
+  font-size: 80px;
+  text-align: center;
+}
+
+.main {
+  font-family: 'Balsamiq Sans';
+  font-size: 24px;
+  background: #FFF;
+  border: 1px solid #e6e6e6;
+  display: block;
+  width: 720px;
+  margin: 0 auto;
+  -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  padding: 10px 0 10px 0;
+}
+
+.main hr {
+  color: #949494;
+  margin-top: 3px;
+}
+
+.main .todo {
+  border: none;
+  width: 100%;
+}
+
+.main .list .list-item {
+  margin: 10px 0 10px 0;
+  padding: 10px 0 10px 0;
+  position: relative;
+}
+
+.main .list .list-item .text {
+  display: inline-block;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.main .list .list-item input {
+  width: 0;
+  height: 0;
+  display: block;
+}
+
+.main .list .list-item .checkmark {
+  display: inline-block;
+  float: left;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  border: 1px solid #ddd;
+  margin-bottom: 0;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translate(0, -50%);
+          transform: translate(0, -50%);
+}
+
+.main .list .list-item .checkmark:after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 25px;
+  border-right: 3px solid #08bb68;
+  border-bottom: 3px solid #08bb68;
+  top: 40%;
+  left: 55%;
+  -webkit-transform: translate(-50%, -50%) rotateZ(40deg);
+          transform: translate(-50%, -50%) rotateZ(40deg);
+  opacity: 0;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.main .list .list-item input:checked ~ .checkmark {
+  border: 1px solid #08bb68;
+}
+
+.main .list .list-item input:checked ~ .checkmark:after {
+  opacity: 1;
+}
+
+.main .list .list-item input:checked ~ .text {
+  color: #ddd;
+  text-decoration: line-through;
+}
+
+.main .list .list-item .btn-wrap {
+  display: inline-block;
+  float: right;
+}
+
+.main .list .list-item button {
+  border: 0;
+  width: 40px;
+  height: 40px;
+  background: #FFF;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  -webkit-transform: translate(0, -50%);
+          transform: translate(0, -50%);
+  opacity: 0.1;
+}
+
+.main .list .list-item button:before {
+  content: "";
+  position: absolute;
+  width: 3px;
+  height: 25px;
+  background-color: red;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%) rotateZ(40deg);
+          transform: translate(-50%, -50%) rotateZ(40deg);
+  border-radius: 2px;
+}
+
+.main .list .list-item button:after {
+  content: "";
+  position: absolute;
+  width: 3px;
+  height: 25px;
+  background-color: red;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%) rotateZ(-40deg);
+          transform: translate(-50%, -50%) rotateZ(-40deg);
+  border-radius: 2px;
+}
+
+.main .list .list-item button:hover {
+  opacity: 1;
+}
+
+footer {
+  font-family: 'Balsamiq Sans';
+  font-size: 15px;
+  text-align: center;
+  color: #949494;
+  margin-top: 20px;
+}
+/*# sourceMappingURL=style.css.map */
