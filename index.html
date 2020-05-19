@@ -8,7 +8,6 @@
         <link rel="stylesheet" href="css/bootstrap-grid.min.css">
         <link rel="stylesheet" href="css/style.css">
         <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@400;700&display=swap" rel="stylesheet"> 
-    
    </head>
     <body>
         <header>
@@ -18,24 +17,16 @@
         </header>
         <section class="main">
             <div class="container">
+                <button id="check-all" onclick="checkAll()"></button>
                 <input id="todo"type="text" placeholder="What needs to be done?" onkeydown="addComponent(event)">
                 <hr>
-                <div id="list">
-                    <!-- <div class="list-item">
-                        <input type="checkbox" id="check_1">
-                        <label for="check_1" class = "checkmark"></label>
-                        <div class="text">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti nam sequi est, necessitatibus magni sit ex maxime minima eius, unde expedita. Fugit asperiores pariatur, illum fuga provident inventore maxime ducimus.
-                        </div>
-                        <button></button>
-                    </div>
-                    <div class="list-item">
-                        <input type="checkbox" id="check_2">
-                        <label for="check_2" class = "checkmark"></label>
-                        <div class="text">adjasdansdnjasjkdnjas</div>
-                        
-                        <button></button> -->
-                    </div>
+                <div id="list"></div>
+                <div id="bot-menu">
+                    <hr>
+                    <div id="item-count"></div>
+                    <button>All</button>
+                    <button>Active</button>
+                    <button>Completed</button>
                 </div>
             </div>
         </section>
@@ -44,6 +35,6 @@
                 Double-click to edit a todo
             </div>
         </footer>
-        <script src="/js/script.js"></script>
+        <script src="./js/script.js"></script>
     </body>
 </html>
