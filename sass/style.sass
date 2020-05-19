@@ -1,11 +1,14 @@
 //font-family: 'Balsamiq Sans', cursive;
 body 
     background-color: #f5f5f5
+    font-family: 'Balsamiq Sans'
 header
     h1
         font-family: 'Balsamiq Sans'
         font-size: 80px
         text-align: center
+.container
+    padding: 0 15px 0 15px 
 .main
     font-family: 'Balsamiq Sans'
     font-size: 24px
@@ -57,10 +60,11 @@ header
         margin-top: 3px
         
     #todo
-        //border: 1px solid #e6e6e6
+        border: 1px solid #e6e6e6
         border: none
         width: calc( 100% - 60px )
         margin: 15px 0 15px 0
+        padding-left: 15px  
         
         
     #list
@@ -68,20 +72,31 @@ header
             margin: 10px 0 10px 0
             padding: 10px 0 10px 0
             position: relative
+            display: flex
+            align-items: center
             .text
-                display: inline-block
+                //display: inline-block
                 transition:  all 0.2s
                 padding-left: 50px
                 padding-right: 50px
+                position: relative
+                width: 588px
+                input
+                    opacity: 1
+                    width: 100%
+                    //height: 0px
+                    float: left
+                    border: 1px solid #777
+
               
                 
             input
                 width: 0
-                height: 0
+                //height: 0
                 display: block
                 opacity: 0
             .checkmark
-                display: inline-block
+                display: block
                 float: left
                 width: 40px
                 height: 40px
@@ -92,6 +107,7 @@ header
                 position: absolute
                 top: 50%
                 transform: translate(0, -50%)
+                z-index: 1
                 
                 
                 &:after
@@ -114,15 +130,13 @@ header
                 & ~ .text
                     color: #ddd
                     text-decoration: line-through
-            .btn-wrap
-                display: inline-block
-                float: right
+            
             button 
                 border: 0
                 width: 40px
                 height: 40px
                 user-select: none
-                background: #FFF
+                background: none
                 box-shadow: none
                 position: absolute
                 top: 50%
@@ -158,6 +172,8 @@ header
     #bot-menu
         font-family: 'Balsamiq Sans'
         font-size: 19px
+        position: relative
+        
         
         #item-count
             display: block
@@ -165,18 +181,12 @@ header
             width: 210px
             padding-bottom: 8px
         button
-            border: 0
+            border: 2px solid #FFF
             background: #FFF
-            border-radius: 5px
-            &:hover
-                border: 2px solid #fa8e8e
-
-                
-                
-                
-
-                
-
+            border-radius: 5px 
+            user-select: none
+        #view-all
+            border: 2px solid #ff5e5e
 
 footer 
     font-family: 'Balsamiq Sans'

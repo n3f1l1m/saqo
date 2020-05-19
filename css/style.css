@@ -1,11 +1,16 @@
 body {
   background-color: #f5f5f5;
+  font-family: 'Balsamiq Sans';
 }
 
 header h1 {
   font-family: 'Balsamiq Sans';
   font-size: 80px;
   text-align: center;
+}
+
+.container {
+  padding: 0 15px 0 15px;
 }
 
 .main {
@@ -78,34 +83,49 @@ header h1 {
 }
 
 .main #todo {
+  border: 1px solid #e6e6e6;
   border: none;
   width: calc( 100% - 60px);
   margin: 15px 0 15px 0;
+  padding-left: 15px;
 }
 
 .main #list .list-item {
   margin: 10px 0 10px 0;
   padding: 10px 0 10px 0;
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .main #list .list-item .text {
-  display: inline-block;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
   padding-left: 50px;
   padding-right: 50px;
+  position: relative;
+  width: 588px;
+}
+
+.main #list .list-item .text input {
+  opacity: 1;
+  width: 100%;
+  float: left;
+  border: 1px solid #777;
 }
 
 .main #list .list-item input {
   width: 0;
-  height: 0;
   display: block;
   opacity: 0;
 }
 
 .main #list .list-item .checkmark {
-  display: inline-block;
+  display: block;
   float: left;
   width: 40px;
   height: 40px;
@@ -120,6 +140,7 @@ header h1 {
   top: 50%;
   -webkit-transform: translate(0, -50%);
           transform: translate(0, -50%);
+  z-index: 1;
 }
 
 .main #list .list-item .checkmark:after {
@@ -153,11 +174,6 @@ header h1 {
   text-decoration: line-through;
 }
 
-.main #list .list-item .btn-wrap {
-  display: inline-block;
-  float: right;
-}
-
 .main #list .list-item button {
   border: 0;
   width: 40px;
@@ -166,7 +182,7 @@ header h1 {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  background: #FFF;
+  background: none;
   -webkit-box-shadow: none;
           box-shadow: none;
   position: absolute;
@@ -218,6 +234,7 @@ header h1 {
 .main #bot-menu {
   font-family: 'Balsamiq Sans';
   font-size: 19px;
+  position: relative;
 }
 
 .main #bot-menu #item-count {
@@ -228,13 +245,17 @@ header h1 {
 }
 
 .main #bot-menu button {
-  border: 0;
+  border: 2px solid #FFF;
   background: #FFF;
   border-radius: 5px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
-.main #bot-menu button:hover {
-  border: 2px solid #fa8e8e;
+.main #bot-menu #view-all {
+  border: 2px solid #ff5e5e;
 }
 
 footer {

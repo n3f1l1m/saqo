@@ -5,7 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>To do list</title>
         <link rel="stylesheet" href="css/bootstrap-reboot.min.css">
-        <link rel="stylesheet" href="css/bootstrap-grid.min.css">
         <link rel="stylesheet" href="css/style.css">
         <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@400;700&display=swap" rel="stylesheet"> 
    </head>
@@ -18,15 +17,15 @@
         <section class="main">
             <div class="container">
                 <button id="check-all" onclick="checkAll()"></button>
-                <input id="todo"type="text" placeholder="What needs to be done?" onkeydown="addComponent(event)">
+                <input id="todo"type="text" placeholder="What needs to be done?" onkeydown="addComponent(event)" autofocus>
                 <hr>
                 <div id="list"></div>
                 <div id="bot-menu">
                     <hr>
                     <div id="item-count"></div>
-                    <button>All</button>
-                    <button>Active</button>
-                    <button>Completed</button>
+                    <button id="view-all" onclick="viewAll(event)">All</button>
+                    <button id="view-active" onclick="viewActive(event)">Active</button>
+                    <button id="view-completed" onclick="viewCompleted(event)">Completed</button>
                 </div>
             </div>
         </section>
