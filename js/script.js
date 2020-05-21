@@ -1,7 +1,8 @@
 var inputText = document.getElementById("todo"),
     list =document.getElementById("list"),
-    
-    //checkBoxeWrapers = list.getElementsByClassName("checkmark"),
+    viewAllBtn = true,
+    viewActiveBtn = false,
+    viewCompletedBtn = false,
     n = list.childElementCount,
     data = [],
     checkCount = 0,
@@ -32,6 +33,25 @@ function itemCountUpdate() {
             checkCount++;
         }
     }
+    let checkAllBtn = document.getElementById("check-all");
+    if(checkCount == n) {
+        isAllChecked = true;
+        checkAllBtn.setAttribute("style", "opacity: 1");
+    }
+    else{
+        isAllChecked = false;
+        checkAllBtn.setAttribute("style", "opacity: 0.1");
+    }
+    if(viewAllBtn){
+        viewAll(event);
+    }
+    if(viewActiveBtn){
+        viewActive(event);
+    }
+    if(viewCompletedBtn){
+        viewCompleted(event);
+    }
+
     //onsole.log(checkCount);
     itemCount.innerText = (n - checkCount + " item left");
 }
@@ -55,6 +75,7 @@ function checkAll() {
         checkAllBtn.setAttribute("style", "opacity: 0.1");
     }
     itemCountUpdate();
+
 
 }
 function addComponent(event) {
@@ -138,6 +159,7 @@ function editComponent(event) {
 }
 function inputEvent(event) {
     let elem = event.target;
+    elem.focus();
     if (event.key == "Enter") {
             let tempText = elem.value.trim();
             //console.log(tempText); 
@@ -167,46 +189,62 @@ function inputEvent(event) {
         
     }
 }
-function viewAll(event) {
+function viewAll() {
     //console.log('viewAll');
-    let checkBoxes = list.getElementsByTagName("input");
+    let checkBoxes = list.getElementsByTagName("input"),
+    btn = document.getElementById("view-all");
     //console.log(checkBoxes);
     for(let item of checkBoxes) {
         //console.log(item.parentElement);
         item.parentElement.style = "display: flex";
     }
-    btnBorder(event.target);
-
+    btnBorder(btn, n);
+    viewAllBtn = true;
+    viewActiveBtn = false;
+    viewCompletedBtn = false;
 }                    
-function viewActive(event) {
+function viewActive() {
     //console.log('viewActive'); 
-    let checkBoxes = list.getElementsByTagName("input");
+    let checkBoxes = list.getElementsByTagName("input"),
+        btn = document.getElementById("view-active");
     //console.log(checkBoxes);
+    let viewCount = 0;
     for(let item of checkBoxes) {
         if(item.checked == true) {
             item.parentElement.style = "display: none";
+             
         }
         else {
             item.parentElement.style = "display: flex";
+            viewCount++;
         }
     }
-    btnBorder(event.target);
+    viewAllBtn = false;
+    viewActiveBtn = true;
+    viewCompletedBtn = false;
+    btnBorder(btn, viewCount);
 }
-function viewCompleted(event) {
+function viewCompleted() {
     //console.log('viewCompleted'); 
-    let checkBoxes = list.getElementsByTagName("input");
+    let checkBoxes = list.getElementsByTagName("input"),
+    btn = document.getElementById("view-completed");
     //console.log(checkBoxes);
+    let viewCount = 0;
     for(let item of checkBoxes) {
         if(item.checked != true) {
             item.parentElement.style = "display: none";
         }
         else {
             item.parentElement.style = "display: flex";
+            viewCount++;
         }
     }   
-    btnBorder(event.target);          
+    viewAllBtn = false;
+    viewActiveBtn = false;
+    viewCompletedBtn = true;
+    btnBorder(btn, viewCount);          
 }
-function btnBorder(key) {
+function btnBorder(key,viewCount) {
     let btns = document.getElementById("bot-menu").querySelectorAll("button");
     //console.log(btns);
     //console.log(key);
@@ -217,9 +255,14 @@ function btnBorder(key) {
         }
         else {
             item.style = "border: 2px solid #FFF";
-        }
-        item.isHover  = ":hover border: 2px solid #fa8e8e"
-        
+        }    
+    }
+    let hrTag = document.getElementsByTagName("hr");
+    if (viewCount == 0) {
+        hrTag[0].setAttribute("style", "display: none");
+    }
+    else {
+        hrTag[0].setAttribute("style", "display: block");
     }
 }
 hrViewer();
