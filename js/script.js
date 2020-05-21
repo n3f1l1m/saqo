@@ -27,12 +27,19 @@ function itemCountUpdate() {
 
     let itemCount = document.getElementById("item-count"),
         checkBoxes = list.getElementsByTagName("input"),
-        checkCount = 0;
+        checkCount = 0,
+        index = 0;
     for(let item of checkBoxes) {
         if(item.checked == true){
             checkCount++;
+            data[index].isChecked = true;
         }
+        else {
+            data[index].isChecked = false;
+        }
+        index++;
     }
+    
     let checkAllBtn = document.getElementById("check-all");
     if(checkCount == n) {
         isAllChecked = true;
@@ -51,9 +58,14 @@ function itemCountUpdate() {
     if(viewCompletedBtn){
         viewCompleted(event);
     }
-
+    //hrViewer();
     //onsole.log(checkCount);
     itemCount.innerText = (n - checkCount + " item left");
+    localStorage.setItem("data", JSON.stringify(data));
+    localStorage.setItem("viewAllBtn", viewAllBtn);
+    localStorage.setItem("viewActiveBtn", viewActiveBtn);
+    localStorage.setItem("viewCompletedBtn", viewCompletedBtn);
+
 }
 function checkAll() {
     let checkBoxes = list.getElementsByTagName("input"),
@@ -101,7 +113,7 @@ function addComponent(event) {
             }
             //console.log(tempText.length);
             txtFinal = txtFinal + tempText;
-            ++n;
+            
             let component = document.createElement("div");
             component.setAttribute("class","list-item");
             let inputTag = document.createElement("input");
@@ -123,23 +135,47 @@ function addComponent(event) {
             btnTag.setAttribute("onclick","removeComponent(event)"); 
             component.appendChild(btnTag);
             list.appendChild(component);
+            
+            data.push({id: n, isChecked: false, text: tempText});
+            ++n;
             hrViewer();
             itemCountUpdate();
-            data.push({isChecked: false, text: tempText});
-            //console.log(data);
+            
+
+           
+            //console.log(data[n-1]);
         }
     
     }
-        
+    localStorage.setItem("data", JSON.stringify(data));
+    localStorage.setItem("viewAllBtn", viewAllBtn);
+    localStorage.setItem("viewActiveBtn", viewActiveBtn);
+    localStorage.setItem("viewCompletedBtn", viewCompletedBtn);   
 }
 function removeComponent(event) {
-    let btn = event.target;
+    let btn = event.target,
+    btnID,
+    checkAllBtn = document.getElementById("check-all");
     btn.parentElement.parentElement.removeChild(btn.parentElement);
     n--;
-    data.splice(btn.id.slice(4,5) - 1, 1)
+    btnID = btn.id.slice(4,5);
+    for(let i = 0 ; i< data.length; i++) {
+        if(data[i].id == btnID ) {
+            data.splice(i, 1);
+        }
+    }
+    //data.splice(btn.id.slice(4,5) - 1, 1)
     hrViewer();
     itemCountUpdate();
     //console.log(data);
+    if(n == 0) {
+        checkAllBtn.setAttribute("style", "display: none");
+    }
+    localStorage.setItem("data", JSON.stringify(data));
+    localStorage.setItem("viewAllBtn", viewAllBtn);
+    localStorage.setItem("viewActiveBtn", viewActiveBtn);
+    localStorage.setItem("viewCompletedBtn", viewCompletedBtn);
+    
 }
 function editComponent(event) {
     let textTag = event.target;
@@ -167,26 +203,23 @@ function inputEvent(event) {
                 elem.value = "";
             }
             let txtFinal = "";
-            while (tempText.length > 50) {
-                //console.log(tempText.length);
+            while (tempText.length > 50) {       
                 if(tempText.search(" ") > 50 || tempText.search(" ") == -1) {
-                        //console.log(tempText.slice(0,50));
-                        //console.log("text final", txtFinal);
-
                         txtFinal = txtFinal + tempText.slice(0,50) + " ";
-                        tempText = tempText.slice(50,tempText.length);
-                        //break;
-                        
+                        tempText = tempText.slice(50,tempText.length);        
                 }
-
             }
-            //console.log(tempText.length);
             txtFinal = txtFinal + tempText;
 
-        let parElem = elem.parentElement;
+        let parElem = elem.parentElement,
+            id = parElem.parentElement.getElementsByTagName("button")[0].id.slice(4,5);
+        data[id].text = txtFinal;
         parElem.removeChild(elem);
         parElem.innerText = txtFinal;
-        
+        localStorage.setItem("data", JSON.stringify(data));
+        localStorage.setItem("viewAllBtn", viewAllBtn);
+        localStorage.setItem("viewActiveBtn", viewActiveBtn);
+        localStorage.setItem("viewCompletedBtn", viewCompletedBtn);
     }
 }
 function viewAll() {
@@ -202,6 +235,9 @@ function viewAll() {
     viewAllBtn = true;
     viewActiveBtn = false;
     viewCompletedBtn = false;
+    localStorage.setItem("viewAllBtn", viewAllBtn);
+    localStorage.setItem("viewActiveBtn", viewActiveBtn);
+    localStorage.setItem("viewCompletedBtn", viewCompletedBtn);
 }                    
 function viewActive() {
     //console.log('viewActive'); 
@@ -223,6 +259,9 @@ function viewActive() {
     viewActiveBtn = true;
     viewCompletedBtn = false;
     btnBorder(btn, viewCount);
+    localStorage.setItem("viewAllBtn", viewAllBtn);
+    localStorage.setItem("viewActiveBtn", viewActiveBtn);
+    localStorage.setItem("viewCompletedBtn", viewCompletedBtn);
 }
 function viewCompleted() {
     //console.log('viewCompleted'); 
@@ -242,7 +281,10 @@ function viewCompleted() {
     viewAllBtn = false;
     viewActiveBtn = false;
     viewCompletedBtn = true;
-    btnBorder(btn, viewCount);          
+    btnBorder(btn, viewCount);  
+    localStorage.setItem("viewAllBtn", viewAllBtn);
+    localStorage.setItem("viewActiveBtn", viewActiveBtn);
+    localStorage.setItem("viewCompletedBtn", viewCompletedBtn);        
 }
 function btnBorder(key,viewCount) {
     let btns = document.getElementById("bot-menu").querySelectorAll("button");
@@ -265,5 +307,53 @@ function btnBorder(key,viewCount) {
         hrTag[0].setAttribute("style", "display: block");
     }
 }
+function pageRestore() {
+    let newJSON = localStorage.getItem("data");
+    console.log(localStorage.getItem("viewAllBtn"));
+    console.log(localStorage.getItem("viewActiveBtn"));
+    console.log(localStorage.getItem("viewAllBtn"));
+    viewAllBtn = Boolean(localStorage.getItem("viewAllBtn"));
+    viewActiveBtn = Boolean(localStorage.getItem("viewActiveBtn"));
+    viewCompletedBtn = Boolean(localStorage.getItem("viewCompletedBtn"));
+    
+    newData = JSON.parse(newJSON);
+    console.log(newData);
+    for(let item of newData) {
+        let component = document.createElement("div");
+        component.setAttribute("class","list-item");
+        let inputTag = document.createElement("input");
+        inputTag.setAttribute("type", "checkbox");
+        inputTag.setAttribute("id","check_"+n);
+        if(item.isChecked){
+            inputTag.setAttribute("checked",item.isChecked);
+        }
+        inputTag.setAttribute("onchange", "itemCountUpdate()");
+        component.appendChild(inputTag);
+        let labelTag = document.createElement("label");
+        labelTag.setAttribute("for", "check_"+n);
+        labelTag.setAttribute("class","checkmark");
+        component.appendChild(labelTag);
+        let textTag = document.createElement("div");
+        textTag.setAttribute("class", "text");
+        textTag.setAttribute("ondblclick", "editComponent(event)");
+        textTag.innerText = item.text;
+        component.appendChild(textTag);
+        let btnTag = document.createElement("button")
+        btnTag.setAttribute("id","btn_"+n); 
+        btnTag.setAttribute("onclick","removeComponent(event)"); 
+        component.appendChild(btnTag);
+        list.appendChild(component);
+        
+        data.push({id: n, isChecked: false, text: item.text});
+        ++n;
+        
+        }
+        hrViewer();
+        itemCountUpdate();
+}
+pageRestore();
 hrViewer();
 //itemCountUpdate();
+//localStorage.clear();
+//localStorage.setItem("data", data);
+//console.log(localStorage.getItem("data")[0]);
