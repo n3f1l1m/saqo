@@ -1,34 +1,37 @@
 var inputText = document.getElementById("todo"),
     list =document.getElementById("list"),
+    hrTag = document.getElementById("line"),
     viewAllBtn = true,
     viewActiveBtn = false,
     viewCompletedBtn = false,
+    viewCount,
     n = list.childElementCount,
     data = [],
     checkCount = 0,
     isAllChecked = false;
+
     
 function hrViewer() {
-    let hrTag = document.getElementsByTagName("hr"),
-        checkAllBtn = document.getElementById("check-all"),
+
+    let checkAllBtn = document.getElementById("check-all"),
         botMenu = document.getElementById("bot-menu");
     if(n == 0){
-        hrTag[0].setAttribute("style", "display: none");
+        hrTag.setAttribute("style", "display: none");
         checkAllBtn.setAttribute("style", "display: none");
         botMenu.setAttribute("style", "display: none");
     }
     else{
-        hrTag[0].setAttribute("style", "display: block");
+        hrTag.setAttribute("style", "display: block");
         checkAllBtn.setAttribute("style", "display: block");
         botMenu.setAttribute("style", "display: block");
     }
+
 } 
 function itemCountUpdate() {
-
     let itemCount = document.getElementById("item-count"),
         checkBoxes = list.getElementsByTagName("input"),
-        checkCount = 0,
         index = 0;
+        checkCount = 0;
     for(let item of checkBoxes) {
         if(item.checked == true){
             checkCount++;
@@ -41,30 +44,32 @@ function itemCountUpdate() {
     }
     
     let checkAllBtn = document.getElementById("check-all");
-    if(checkCount == n) {
-        isAllChecked = true;
-        checkAllBtn.setAttribute("style", "opacity: 1");
+
+    if(n != 0) {
+        if(checkCount == n) {
+
+            isAllChecked = true;
+            checkAllBtn.setAttribute("style", "opacity: 1");
+        }
+        else{
+
+            isAllChecked = false;
+            checkAllBtn.setAttribute("style", "opacity: 0.1");
+        }
     }
-    else{
-        isAllChecked = false;
-        checkAllBtn.setAttribute("style", "opacity: 0.1");
-    }
+    
     if(viewAllBtn){
-        viewAll(event);
+        viewAll();
     }
-    if(viewActiveBtn){
-        viewActive(event);
+    else if(viewActiveBtn){
+        viewActive();
     }
-    if(viewCompletedBtn){
-        viewCompleted(event);
+    else if(viewCompletedBtn){
+        viewCompleted();
     }
-    //hrViewer();
-    //onsole.log(checkCount);
     itemCount.innerText = (n - checkCount + " item left");
     localStorage.setItem("data", JSON.stringify(data));
-    localStorage.setItem("viewAllBtn", viewAllBtn);
-    localStorage.setItem("viewActiveBtn", viewActiveBtn);
-    localStorage.setItem("viewCompletedBtn", viewCompletedBtn);
+    
 
 }
 function checkAll() {
@@ -99,19 +104,13 @@ function addComponent(event) {
             inputText.value = "";
             let txtFinal = "";
             while (tempText.length > 50) {
-                //console.log(tempText.length);
                 if(tempText.search(" ") > 50 || tempText.search(" ") == -1) {
-                        //console.log(tempText.slice(0,50));
-                        //console.log("text final", txtFinal);
-
                         txtFinal = txtFinal + tempText.slice(0,50) + " ";
                         tempText = tempText.slice(50,tempText.length);
-                        //break;
                         
                 }
 
             }
-            //console.log(tempText.length);
             txtFinal = txtFinal + tempText;
             
             let component = document.createElement("div");
@@ -140,17 +139,10 @@ function addComponent(event) {
             ++n;
             hrViewer();
             itemCountUpdate();
-            
-
-           
-            //console.log(data[n-1]);
         }
     
     }
-    localStorage.setItem("data", JSON.stringify(data));
-    localStorage.setItem("viewAllBtn", viewAllBtn);
-    localStorage.setItem("viewActiveBtn", viewActiveBtn);
-    localStorage.setItem("viewCompletedBtn", viewCompletedBtn);   
+    localStorage.setItem("data", JSON.stringify(data));  
 }
 function removeComponent(event) {
     let btn = event.target,
@@ -164,17 +156,12 @@ function removeComponent(event) {
             data.splice(i, 1);
         }
     }
-    //data.splice(btn.id.slice(4,5) - 1, 1)
     hrViewer();
     itemCountUpdate();
-    //console.log(data);
     if(n == 0) {
         checkAllBtn.setAttribute("style", "display: none");
     }
     localStorage.setItem("data", JSON.stringify(data));
-    localStorage.setItem("viewAllBtn", viewAllBtn);
-    localStorage.setItem("viewActiveBtn", viewActiveBtn);
-    localStorage.setItem("viewCompletedBtn", viewCompletedBtn);
     
 }
 function editComponent(event) {
@@ -187,10 +174,7 @@ function editComponent(event) {
         inputTag.setAttribute("value", temp);
         inputTag.focus();
         inputTag.setAttribute("onkeydown", "inputEvent(event)");
-        //console.log("new event",keyEvent);
-        
     textTag.appendChild(inputTag);
-    //textTag.firstChild.focus = true;
     
 }
 function inputEvent(event) {
@@ -198,7 +182,6 @@ function inputEvent(event) {
     elem.focus();
     if (event.key == "Enter") {
             let tempText = elem.value.trim();
-            //console.log(tempText); 
             if(tempText != "") {
                 elem.value = "";
             }
@@ -217,34 +200,25 @@ function inputEvent(event) {
         parElem.removeChild(elem);
         parElem.innerText = txtFinal;
         localStorage.setItem("data", JSON.stringify(data));
-        localStorage.setItem("viewAllBtn", viewAllBtn);
-        localStorage.setItem("viewActiveBtn", viewActiveBtn);
-        localStorage.setItem("viewCompletedBtn", viewCompletedBtn);
     }
 }
 function viewAll() {
-    //console.log('viewAll');
     let checkBoxes = list.getElementsByTagName("input"),
     btn = document.getElementById("view-all");
-    //console.log(checkBoxes);
     for(let item of checkBoxes) {
-        //console.log(item.parentElement);
         item.parentElement.style = "display: flex";
     }
     btnBorder(btn, n);
     viewAllBtn = true;
     viewActiveBtn = false;
     viewCompletedBtn = false;
-    localStorage.setItem("viewAllBtn", viewAllBtn);
-    localStorage.setItem("viewActiveBtn", viewActiveBtn);
-    localStorage.setItem("viewCompletedBtn", viewCompletedBtn);
+    localStorage.setItem("state", "view-all");
+
 }                    
 function viewActive() {
-    //console.log('viewActive'); 
     let checkBoxes = list.getElementsByTagName("input"),
         btn = document.getElementById("view-active");
-    //console.log(checkBoxes);
-    let viewCount = 0;
+    viewCount = 0;
     for(let item of checkBoxes) {
         if(item.checked == true) {
             item.parentElement.style = "display: none";
@@ -259,16 +233,13 @@ function viewActive() {
     viewActiveBtn = true;
     viewCompletedBtn = false;
     btnBorder(btn, viewCount);
-    localStorage.setItem("viewAllBtn", viewAllBtn);
-    localStorage.setItem("viewActiveBtn", viewActiveBtn);
-    localStorage.setItem("viewCompletedBtn", viewCompletedBtn);
+    localStorage.setItem("state", "view-active");
+
 }
 function viewCompleted() {
-    //console.log('viewCompleted'); 
     let checkBoxes = list.getElementsByTagName("input"),
     btn = document.getElementById("view-completed");
-    //console.log(checkBoxes);
-    let viewCount = 0;
+    viewCount = 0;
     for(let item of checkBoxes) {
         if(item.checked != true) {
             item.parentElement.style = "display: none";
@@ -282,14 +253,10 @@ function viewCompleted() {
     viewActiveBtn = false;
     viewCompletedBtn = true;
     btnBorder(btn, viewCount);  
-    localStorage.setItem("viewAllBtn", viewAllBtn);
-    localStorage.setItem("viewActiveBtn", viewActiveBtn);
-    localStorage.setItem("viewCompletedBtn", viewCompletedBtn);        
+    localStorage.setItem("state", "view-completed");       
 }
 function btnBorder(key,viewCount) {
     let btns = document.getElementById("bot-menu").querySelectorAll("button");
-    //console.log(btns);
-    //console.log(key);
     for(let item of btns) {
         
         if(key == item) {
@@ -299,25 +266,40 @@ function btnBorder(key,viewCount) {
             item.style = "border: 2px solid #FFF";
         }    
     }
-    let hrTag = document.getElementsByTagName("hr");
     if (viewCount == 0) {
-        hrTag[0].setAttribute("style", "display: none");
+        hrTag.setAttribute("style", "display: none");
     }
     else {
-        hrTag[0].setAttribute("style", "display: block");
+        hrTag.setAttribute("style", "display: block");
+
     }
 }
 function pageRestore() {
-    let newJSON = localStorage.getItem("data");
-    console.log(localStorage.getItem("viewAllBtn"));
-    console.log(localStorage.getItem("viewActiveBtn"));
-    console.log(localStorage.getItem("viewAllBtn"));
-    viewAllBtn = Boolean(localStorage.getItem("viewAllBtn"));
-    viewActiveBtn = Boolean(localStorage.getItem("viewActiveBtn"));
-    viewCompletedBtn = Boolean(localStorage.getItem("viewCompletedBtn"));
-    
+    let newJSON = localStorage.getItem("data"),
+    state = localStorage.getItem("state");
+
+    isAllChecked = false;
+    switch(state) {
+        case "view-completed":
+            viewAllBtn = false;
+            viewActiveBtn = false;
+            viewCompletedBtn = true;
+            break
+        case "view-active":
+            viewAllBtn = false;
+            viewActiveBtn = true;
+            viewCompletedBtn = false;
+            break
+        case "view-all":
+            viewAllBtn = true;
+            viewActiveBtn = false;
+            viewCompletedBtn = false;
+            break      
+    }
     newData = JSON.parse(newJSON);
-    console.log(newData);
+
+
+if(newData != null){
     for(let item of newData) {
         let component = document.createElement("div");
         component.setAttribute("class","list-item");
@@ -343,17 +325,13 @@ function pageRestore() {
         btnTag.setAttribute("onclick","removeComponent(event)"); 
         component.appendChild(btnTag);
         list.appendChild(component);
-        
-        data.push({id: n, isChecked: false, text: item.text});
+        data.push({id: n, isChecked: item.isChecked, text: item.text});
         ++n;
-        
-        }
+    }
+}
         hrViewer();
         itemCountUpdate();
 }
+
 pageRestore();
-hrViewer();
-//itemCountUpdate();
-//localStorage.clear();
-//localStorage.setItem("data", data);
-//console.log(localStorage.getItem("data")[0]);
+
